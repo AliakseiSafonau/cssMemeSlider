@@ -35,6 +35,7 @@ function afterRender() {
 
     const target  = e.target
     const item = target.closest('.slider__dot')
+		
     if (item) {
       if (item.className !== 'slider__dot active') {
         for (let d of dot) {
