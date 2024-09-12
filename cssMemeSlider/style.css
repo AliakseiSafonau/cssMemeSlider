@@ -19,6 +19,10 @@ button, input {
   border: none;
 }
 
+input {
+  display: none;
+}
+
 @font-face {
   font-family: "ArialRegular";  
   src: url("assets/fonts/arial__regular.ttf") format("truetype");
@@ -43,14 +47,13 @@ button, input {
 }
 
 .slider {
-  width: fit-content;
   border: 2px solid azure;
   border-radius: 10px;
 }
 
 .slider_content {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   padding: 30px 50px;
   gap: 20px;
   border-radius: 10px;
@@ -59,14 +62,15 @@ button, input {
 
 .slider__cards {
   width: 75vw;
+  aspect-ratio: 4/3;
   max-width: 800px;
-  border: 2px solid black;
   border-radius: 10px;
 }
 
 .slider__list {
   overflow: hidden;
-  width: 100%;
+  height: 90%;
+  border: 2px solid black;
   border-radius: 10px;
 }
 
@@ -74,35 +78,68 @@ button, input {
   display: flex;
   justify-content: flex-start;
   width: max-content;
+  height: 100%;
+  transition: transform 0s ease-in-out;
 }
 
 .slider__list__item {
-  width: 100%; 
-}
-
-.slider__image {
-  background-color: black;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   width: 75vw;
   max-width: 800px;
-  aspect-ratio: 4/3;
 }
 
-.slider__image img {
-  width: 100%;
-  height: 100%;
+.slider__image1 {
+  background-image: url('assets/photo1.jpg');
+}
+.slider__image2 {
+  background-image: url('assets/photo2.jpg');
+}
+.slider__image3 {
+  background-image: url('assets/photo4.jpg');
+}
+.slider__image4 {
+  background-image: url('assets/photo5.jpg');
+}
+.slider__image5 {
+  background-image: url('assets/photo7.jpg');
 }
 
 .slider__downcontent {
   display: flex;
-  justify-content: space-between;   
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  margin-top: 30px;
 }
 
 .slider__text {
+  overflow: hidden;
   position: relative;
-  display: flex;
-  align-items: start;
-  height: 50px;
   width: 50%;
+}
+
+.slider__phrase {
+	opacity: 0;
+	position: absolute;
+	z-index: 0;
+	transform: translateX(50px);
+	transition: transform 0s ease-in-out, opacity 0s ease-in-out;
+}
+
+#image1:checked ~ .slider__downcontent .slider__phrase:nth-child(1),
+#image2:checked ~ .slider__downcontent .slider__phrase:nth-child(2),
+#image3:checked ~ .slider__downcontent .slider__phrase:nth-child(3),
+#image4:checked ~ .slider__downcontent .slider__phrase:nth-child(4),
+#image5:checked ~ .slider__downcontent .slider__phrase:nth-child(5) {
+  opacity: 1;
+	z-index: 1;
+	transform: translateX(0);
+  transition: transform 0.5s ease-in-out , opacity 0.5s ease-in-out;
+}
+
+.slider__phrase {
+  width: 100%;
 }
 
 .slider__span {
@@ -112,14 +149,6 @@ button, input {
   overflow: auto;
   opacity: 1;
   margin-left: 0;
-}
-
-.slider__span.unvisible {
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  opacity: 0;
-  margin-left: 50px;
 }
 
 .slider__dots {
@@ -135,43 +164,105 @@ button, input {
   align-items: start;
 }
 
-.slider__circle__dot {
+.slider__dot label {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+input ~ .slider__downcontent label div{
   cursor: pointer;
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: rgb(51, 51, 245);
+  background-color: rgb(62, 129, 230);
 }
 
-.slider__dot:hover .slider__circle__dot {
+input ~ .slider__downcontent .slider__dot label:hover div{
   background-color: azure;
 }
 
-.slider__dot:hover .slider__circle__dot.active {
+#image1:checked ~ .slider__downcontent .slider__dot:nth-child(1) label:hover div,
+#image2:checked ~ .slider__downcontent .slider__dot:nth-child(2) label:hover div,
+#image3:checked ~ .slider__downcontent .slider__dot:nth-child(3) label:hover div,
+#image4:checked ~ .slider__downcontent .slider__dot:nth-child(4) label:hover div,
+#image5:checked ~ .slider__downcontent .slider__dot:nth-child(5) label:hover div{
   background-color: rgba(0, 0, 0, 0);
   border: 1px solid azure;
 }
 
-.slider__circle__dot.active {
+#image1:checked ~ .slider__downcontent .slider__dot:nth-child(1) label div,
+#image2:checked ~ .slider__downcontent .slider__dot:nth-child(2) label div,
+#image3:checked ~ .slider__downcontent .slider__dot:nth-child(3) label div,
+#image4:checked ~ .slider__downcontent .slider__dot:nth-child(4) label div,
+#image5:checked ~ .slider__downcontent .slider__dot:nth-child(5) label div {
   background-color: rgba(0, 0, 0, 0);
-  border: 1px solid rgb(51, 51, 245);
+  border: 1px solid rgb(62, 129, 230);
   pointer-events: none;
+  cursor: default;
 }
 
-@media screen and (max-width: 679px) {
+#image1:checked ~ .slider__list .slider__list__items {
+  transform: translateX(0);
+  transition: transform 0.5s ease-in-out;
+}
+#image2:checked ~ .slider__list .slider__list__items {
+  transform: translateX(-800px);
+  transition: transform 0.5s ease-in-out;
+}
+#image3:checked ~ .slider__list .slider__list__items {
+  transform: translateX(-1600px);
+  transition: transform 0.5s ease-in-out;
+}
+#image4:checked ~ .slider__list .slider__list__items {
+  transform: translateX(-2400px);
+  transition: transform 0.5s ease-in-out;
+}
+#image5:checked ~ .slider__list .slider__list__items {
+  transform: translateX(-3200px);
+  transition: transform 0.5s ease-in-out;
+}
+
+
+@media screen and (max-width: 1066px) {
+  #image1:checked ~ .slider__list .slider__list__items {
+    transform: translateX(0);
+    transition: transform 0.5s ease-in-out;
+  }
+  #image2:checked ~ .slider__list .slider__list__items {
+    transform: translateX(-75vw);
+    transition: transform 0.5s ease-in-out;
+  }
+  #image3:checked ~ .slider__list .slider__list__items {
+    transform: translateX(-150vw);
+    transition: transform 0.5s ease-in-out;
+  }
+  #image4:checked ~ .slider__list .slider__list__items {
+    transform: translateX(-225vw);
+    transition: transform 0.5s ease-in-out;
+  }
+  #image5:checked ~ .slider__list .slider__list__items {
+    transform: translateX(-300vw);
+    transition: transform 0.5s ease-in-out;
+  }
+}
+
+@media screen and (max-width: 678px) {
 
   .slider_content {
     display: flex;
     flex-direction: column;
     padding: 20px 30px;
+    aspect-ratio: 8/7;
   }
 
   .slider__downcontent {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     justify-content: space-between;
-    width: 75vw;
-    gap: 20px;
+    gap: 10px;
   }
 
   .slider__dots {
@@ -180,13 +271,13 @@ button, input {
 
   .slider__text {
     width: 100%;
+    height: 20px;
   }
 }
 
 @media screen and (max-width: 479px) {
   .slider_content {
-    display: flex;
-    flex-direction: column;
     padding: 10px 15px;
+    aspect-ratio: 8/8;
   }
 }
